@@ -1,0 +1,199 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!--Materialize UI -->
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <title>Authentication</title>
+</head>
+
+
+<body class="grey lighten-2">
+
+	<!-- Header navigation bar -->
+		<nav class="z-depth-0 #263238 blue-grey darken-4">
+			<div class="nav-wrapper container">
+			<a href="#" class="brand-logo">
+				<img src="assets/logo.png" style="width: 90px; height: 80px;">
+			</a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li class="logged-in" style="display:none;">
+					<a href="#" class="white-text modal-trigger" data-target="modal-bio" id="bio2">About Me</a>
+				</li>
+				<li class="logged-in" style="display:none;">
+					<a href="#" class="white-text modal-trigger" data-target="modal-account">Account</a>
+				</li>
+				<li class="admin" style="display:none;">
+					<a href="#" class="white-text modal-trigger" data-target="modal-admin">Add Admin</a>	
+				</li>
+				<li class="logged-in" style="display:none;">
+					<a href="#" class="white-text" id="logout">Logout</a>
+				</li>
+				<li class="logged-out" style="display:none;">
+					<a href="#" class="white-text modal-trigger" data-target="modal-login">Login</a>
+				</li>
+				<li class="logged-out" style="display:none;">
+					<a href="#" class="white-text modal-trigger" data-target="modal-signup">Sign up</a>
+				</li>
+				</span>
+			</ul>
+			</div>
+		</nav>
+
+	<div class = "main" style="margin-top: 200px;"></div><br>
+	<div class = "verifyEmail"></div>
+
+<!--Modal for adding admins-->
+	<div id="modal-admin" class="modal">
+		<div class="modal-content">
+			<div class="modal-content center-align">
+				<h4>Add an Admin</h4><br />
+			</div>
+		<form class="center-align admin-actions" style="margin:40px auto;max-width: 500px;">
+			<div class="input-field">
+				<input type="email" id="admin-email" autocomplete="off" required />
+			<label for="signup-email">Email address</label>
+			</div><button class="btn #263238 blue-grey darken-4 z-depth-0">Make Admin</button>
+			<br></br>
+			<div class="admin-loading">
+			</div>
+		</form>
+		</div>
+	</div>
+
+
+	<!-- Modal for signup-->
+		<div id="modal-signup" class="modal">
+			<div class="modal-content">
+			<h4>Sign up</h4>
+			<form id="signup-form">
+				<div class="input-field">
+				<input type="email" id="signup-email" autocomplete="off" required />
+				<label for="signup-email">Email address</label>
+				</div>
+				<div class="input-field">
+				<input type="password" id="signup-password" autocomplete="off" required />
+				<label for="signup-password">Choose password</label>
+				</div>
+				<div class="input-field">
+				<input type="password" id="signup-confirm-password" autocomplete="off" required />
+				<label for="signup-confirm-password">Confirm password</label>
+				</div>
+				<div class="password-match"></div>
+				<div class="input-field">
+				<input type="text" id="signup-bio" autocomplete="off" required />
+				<label for="signup-bio">Write about yourself..</label>
+				</div>	
+				<div class="file-field input-field">
+					<div class="btn">
+					  <span>upload Image</span>
+					  <input type="file" accept="image/x-png,image/gif,image/jpeg" id="signup-file">
+					</div>
+					<div class="file-path-wrapper">
+					  <input class="file-path validate" type="text">
+					</div>
+				</div>
+				<div class="center-align">
+					<button class="btn #263238 blue-grey darken-4 z-depth-0"  >Sign up</button>
+				</div>
+				<div class="signup-loading">
+				</div>
+			</form>
+			</div>
+		</div>
+
+
+	<!--Modal for login-->
+		<div id="modal-login" class="modal">
+			<div class="modal-content">
+			<h4>Login</h4><br />
+			<form id="login-form">
+				<div class="input-field">
+				<input type="email" id="login-email" autocomplete="off" required />
+				<label for="login-email">Email address</label>
+				</div>
+				<div class="input-field">
+				<input type="password" id="login-password" autocomplete="off" required />
+				<label for="login-password">Your password</label>
+				</div>
+				<button class="btn #263238 blue-grey darken-4 z-depth-0">Login</button>
+				<br><br>
+				<div style="text-align: right">
+					<a class="waves-effect waves-red btn-flat modal-trigger" data-target="modal-forgot">Forgot Password?</a>
+				</div>
+				<div class="login-loading">
+				</div>
+			</form>
+			</div>
+		</div>
+
+
+	<!--Modal to show account details-->
+		<div id="modal-account" class="modal">
+			<div class="modal-content center-align">
+			<h4>Account Details</h4><br />
+			<div class="account-details"></div>
+			</div>
+		</div>
+
+	<!--Modal to Bio-->
+	<div id="modal-bio" class="modal">
+		<div class="modal-content center-align">
+		<h4>About Me</h4><br />
+		<div class="uploadedImage">
+		</div>
+		<div class="bio"></div>
+		</div>
+
+	</div>	
+
+	<!--Modal to show forgot password-->
+		<div id="modal-forgot" class="modal">
+			<div class = "modal-content center-align">
+				<h4>Forgot Password</h4><br />
+				<form id="forgot-form">
+					<div class="input-field">
+						<input type="email" id="forgotPass-email" autocomplete="off" required />
+						<label for="forgotPass-email">Enter Email address</label>
+					</div>
+				<button class="btn #263238 blue-grey darken-4 z-depth-0">Submit</button>
+				</form>
+			</div>
+			<div class="forgot-loading"></div>
+		</div>
+
+	
+	<!--Firebase SDK-->
+		<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-functions.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-storage.js"></script>
+		<script>
+		var firebaseConfig = {
+			apiKey: "AIzaSyBS99Hu5LjulLZXv5ktX_ngKukWenAn1AQ",
+			authDomain: "task1-authentication.firebaseapp.com",
+			databaseURL: "https://task1-authentication.firebaseio.com",
+			projectId: "task1-authentication",
+			storageBucket:"task1-authentication.appspot.com",
+			appId: "1:1084391945616:web:b7b70218aa5bbb81972f15",
+			measurementId: "G-BLGDRRXSJL"
+		};
+		// Initialize Firebase
+		firebase.initializeApp(firebaseConfig);
+
+		// auth,firestore reference
+		const auth = firebase.auth();
+		const db = firebase.firestore();
+		const functions = firebase.functions();
+		const storage = firebase.storage();
+		</script>
+
+  <!--External and internal scripts-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="scripts/auth.js"></script>
+	<script src="scripts/index.js"></script>
+</body>
+</html>
