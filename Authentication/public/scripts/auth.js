@@ -4,7 +4,6 @@ const signupForm = document.querySelector("#signup-form");
 const logout = document.querySelector('#logout');
 const adminForm = document.querySelector('.admin-actions');
 var loading = "";
-let user;
 
 //Add admin cloud function
 adminForm.addEventListener('submit', (e) => {
@@ -36,15 +35,37 @@ adminForm.addEventListener('submit', (e) => {
     })
 });
 
+
 //Auth status change 
-auth.onAuthStateChanged(usr => {
-    user = usr
+auth.onAuthStateChanged(user => {
     if (user) {
         //console.log("user Logged in",user);
+        //NavUI(user)
         user.getIdTokenResult().then((idTokenResult) => {
+            //console.log(idTokenResult)
             user.admin = idTokenResult.claims.admin;
             NavUI(user);
-        })
+
+            //Email Verifcation
+            const Verification = document.querySelector("#verification");
+            if (Verification) {
+                Verification.addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    const verify = document.querySelector(".verifyEmail");
+
+                    user.sendEmailVerification().then(() => {
+                        //console.log("success")
+                        M.toast({ html: '<font color="green">Verification link is sent!</font>', classes: 'rounded white' });
+                        verify.innerHTML = "";
+                    }).catch(error => {
+                        console.log(error)
+                        M.toast({ html: '<font color="red">Please try again</font>', classes: 'rounded white' });
+                    })
+                })
+            }
+            }).catch(err=>{console.log(err)})
+
+
     }
     else {
         // console.log("User Logged Out",user);
@@ -63,7 +84,6 @@ function checkPassword(str) {
 
 // Signup
 signupForm.addEventListener('submit', (e) => {
-
     e.preventDefault();
 
     //User info
@@ -109,8 +129,9 @@ signupForm.addEventListener('submit', (e) => {
             }).catch((error) => {
                 const signupForm = document.querySelector("#signup-form");
                 var loader = document.querySelector(".signup-loading")
-                signupForm.reset()
-                loader.innerHTML = "";
+                signupForm.reset().then(() => {
+                    loader.innerHTML = "";
+                });;
                 console.log("error", error);
                 const signError = document.querySelector(".signup-error");
                 if (error.code == "auth/invalid-email") {
@@ -153,7 +174,6 @@ loginForm.addEventListener("submit", (e) => {
     const email = loginForm['login-email'].value;
     const password = loginForm['login-password'].value;
     var loader = document.querySelector(".login-loading")
-
     loader.innerHTML = loading;
 
     //Logging User(asynchronous)
@@ -198,27 +218,4 @@ forgotForm.addEventListener("submit", (e) => {
         forgotForm.reset();
         M.toast({ html: '<font color="red">Email does not exist</font>', classes: 'rounded white' });
     });
-});
-
-
-//Verification
-auth.onAuthStateChanged(user =>{
-    if(user){
-    const Verification = document.querySelector("#verification");
-    if(Verification){
-        Verification.addEventListener("submit",(e)=>{
-            e.preventDefault();
-            const verify = document.querySelector(".verifyEmail");
-        
-                user.sendEmailVerification().then(()=>{
-                    console.log("success")
-                    M.toast({html: '<font color="green">Verification link is sent!</font>', classes: 'rounded white'});
-                    verify.innerHTML="";
-                }).catch(error=>{
-                    console.log(error)
-                    M.toast({html: '<font color="red">Please try again</font>', classes: 'rounded white'});
-                })
-        })
-    }
-    }
 });

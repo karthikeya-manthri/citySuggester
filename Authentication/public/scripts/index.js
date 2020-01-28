@@ -7,7 +7,9 @@ const bodyMain = document.querySelector(".main");
 const verify = document.querySelector(".verifyEmail");
 const bio = document.querySelector(".bio");
 const imgPlace = document.querySelector(".uploadedImage");
+
 var imgContent;
+
 const NavUI = (user) => {
     if (user) {
         if (user.admin) {
@@ -52,7 +54,7 @@ const NavUI = (user) => {
                     <form id="verification">
                         <button class="btn #263238 blue-grey darken-4 z-depth-0">Verify Email</button>
                     </form>
-                    </center>
+                </center>
             
             `;
         accountDetails.innerHTML = userDetails;
@@ -63,6 +65,7 @@ const NavUI = (user) => {
         if (user) {
             // Is the email verified?
             if (!user.emailVerified) {
+                //console.log("Ver Ver",verfiyEmail)
                 verify.innerHTML = verfiyEmail;
             }
         }
