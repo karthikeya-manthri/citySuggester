@@ -3,7 +3,9 @@ const loginForm = document.querySelector("#login-form");
 const signupForm = document.querySelector("#signup-form");
 const logout = document.querySelector('#logout');
 const adminForm = document.querySelector('.admin-actions');
+var output = document.querySelector('.image-preview');
 var loading = "";
+var img;
 
 //Add admin cloud function
 adminForm.addEventListener('submit', (e) => {
@@ -20,8 +22,6 @@ adminForm.addEventListener('submit', (e) => {
             M.toast({ html: '<font color="red">Please re-check Email</font>', classes: 'rounded white' });
         }
         else {
-            const modal = document.querySelector("#modal-admin");
-            M.Modal.getInstance(modal).close();
             adminForm.reset();
             M.toast({ html: '<font color="green">Admin created!</font>', classes: 'rounded white' });
         }
@@ -81,6 +81,32 @@ function checkPassword(str) {
     return re.test(str);
 }
 
+var loadFile = (file)=>{
+    var input = file.target;
+
+    if(input.files.length){
+        if(file.target)
+        img = file.target.files[0];
+        //console.log(file.target.files[0]);
+        var reader = new FileReader();
+        reader.onload = function(){
+        var dataURL = reader.result;
+        var imgContent = `
+            <img src=${dataURL} style="height:100px; width:120px;">
+        `
+        output.innerHTML = imgContent;
+        //console.log(dataURL);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+    else{
+        output.innerHTML = "";
+    }
+    
+}
+
+
+
 
 // Signup
 signupForm.addEventListener('submit', (e) => {
@@ -107,12 +133,8 @@ signupForm.addEventListener('submit', (e) => {
         var loader = document.querySelector(".signup-loading")
         loader.innerHTML = loading;
         matchError.innerHTML = "";
-        var user = firebase.auth().currentUser;
         storageRef = storage.ref(email);
-        var $ = jQuery;
-        file_data = $("#signup-file").prop('files')[0];
-        //console.log(file_data);
-        storageRef.put(file_data).then(() => {
+        storageRef.put(img).then(() => {
             //Signing up the user (asynchronous)
             auth.createUserWithEmailAndPassword(email, password).then(Credential => {
                 //console.log(Credential.user.emailVerified);
@@ -122,8 +144,7 @@ signupForm.addEventListener('submit', (e) => {
                     loginCount: 1
                 });
                 loader.innerHTML = "";
-                const modal = document.querySelector("#modal-signup");
-                M.Modal.getInstance(modal).close();
+                output.innerHTML = "";
                 signupForm.reset();
 
             }).catch((error) => {
@@ -131,6 +152,7 @@ signupForm.addEventListener('submit', (e) => {
                 var loader = document.querySelector(".signup-loading")
                 signupForm.reset().then(() => {
                     loader.innerHTML = "";
+                    output.innerHTML="";
                 });;
                 console.log("error", error);
                 const signError = document.querySelector(".signup-error");
@@ -181,8 +203,6 @@ loginForm.addEventListener("submit", (e) => {
 
         //Closing the login modal and resetting the form
         loader.innerHTML = "";
-        const modal = document.querySelector("#modal-login");
-        M.Modal.getInstance(modal).close();
         loginForm.reset();
     }).catch((error) => {
         //if credentials are wrong / doesn't exist.
@@ -206,12 +226,9 @@ forgotForm.addEventListener("submit", (e) => {
     loader.innerHTML = loading;
     const email = forgotForm['forgotPass-email'].value;
     auth.sendPasswordResetEmail(email).then(() => {
-        const modal = document.querySelector("#modal-forgot");
-        M.Modal.getInstance(modal).close();
         forgotForm.reset();
         M.toast({ html: '<font color="green">Reset link has been sent!</font>', classes: 'rounded white' });
     }).catch((error) => {
-        const modal = document.querySelector("#modal-forgot");
         var loader = document.querySelector(".forgot-loading")
         //M.Modal.getInstance(modal).close();
         loader.innerHTML = "";
