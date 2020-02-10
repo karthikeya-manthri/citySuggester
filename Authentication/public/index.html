@@ -4,68 +4,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!--Materialize UI -->
-  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <title>Authentication</title>
+		<link rel="stylesheet" href="index.css">	
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<title>Authentication</title>
 </head>
 
 
 <body class="grey lighten-2">
 
 	<!-- Header navigation bar -->
-		<nav class="z-depth-0 #263238 blue-grey darken-4">
-			<div class="nav-wrapper container">
+		<nav class="z-depth-0 #263238 blue-grey darken-4" style="position: sticky;
+			top: 0;">
+			<div class="nav-wrapper container" >
 			<a href="#" class="brand-logo">
 				<img src="assets/logo.png" style="width: 90px; height: 80px;">
 			</a>
-			<ul id="nav-mobile" class="right hide-on-med-and-down">
+			<ul id="nav-mobile" class="right ">
 				<li class="logged-in" style="display:none;">
-					<a href="#" class="white-text modal-trigger" data-target="modal-bio" id="bio2">About Me</a>
-				</li>
+					<a href ="#" class="white-text " id="home">Home</a>
+				</li>				
 				<li class="logged-in" style="display:none;">
-					<a href="#" class="white-text modal-trigger" data-target="modal-account">Account</a>
+					<a href="#account" class="white-text " >Account</a>
 				</li>
 				<li class="admin" style="display:none;">
-					<a href="#" class="white-text modal-trigger" data-target="modal-admin">Add Admin</a>	
+					<a  href="#admin" class="white-text ">Add Admin</a>	
 				</li>
 				<li class="logged-in" style="display:none;">
-					<a href="#" class="white-text" id="logout">Logout</a>
+					<a class="white-text" id="logout">Logout</a>
 				</li>
 				<li class="logged-out" style="display:none;">
-					<a href="#" class="white-text modal-trigger" data-target="modal-login">Login</a>
+					<a href="#login" class="white-text ">Login</a>
 				</li>
 				<li class="logged-out" style="display:none;">
-					<a href="#" class="white-text modal-trigger" data-target="modal-signup">Sign up</a>
+					<a href="#signup" class="white-text ">Sign up</a>
 				</li>
 				</span>
 			</ul>
 			</div>
 		</nav>
 
-	<div class = "main" style="margin-top: 200px;"></div><br>
-	<div class = "verifyEmail"></div>
 
-<!--Modal for adding admins-->
-	<div id="modal-admin" class="modal">
-		<div class="modal-content">
-			<div class="modal-content center-align">
+<div id="root"></div>
+<div class = "main" style="margin-top: 200px;"></div><br>
+<div class = "verifyEmail"></div>
+
+<!-- Overlay to show loading icon -->
+<div id="overlay">
+	<div id="loader"><img src="assets/loader2.gif" style="width: 70px;height: 70px;"></div>
+</div>
+
+<!--Div for adding admins-->
+	<div id="modal-admin" class="visuallyhidden grey lighten-2" style="
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;
+	text-align: center;width: 1000px;height: 550px;top:0;bottom: 0;left: 0;right: 0;margin: auto;
+	">
+			<div class="center-align">
+				<br /><br />
 				<h4>Add an Admin</h4><br />
 			</div>
-		<form class="center-align admin-actions" style="margin:40px auto;max-width: 500px;">
+		<form class="center-align admin-actions container" style="margin:40px auto;max-width: 500px;">
 			<div class="input-field">
 				<input type="email" id="admin-email" autocomplete="off" required />
 			<label for="signup-email">Email address</label>
 			</div><button class="btn #263238 blue-grey darken-4 z-depth-0">Make Admin</button>
-			<br></br>
+			<br>
 			<div class="admin-loading">
 			</div>
 		</form>
-		</div>
 	</div>
 
 
-	<!-- Modal for signup-->
-		<div id="modal-signup" class="modal">
-			<div class="modal-content">
+
+
+	<!-- Div for signup-->
+		<div id="modal-signup" class="visuallyhidden grey lighten-2" style="
+		box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;
+		text-align: center;width: 1000px;height: 625px;top:0;bottom: 0;left: 0;right: 0;margin: auto;
+		">
+		<div class="container">
+			<br />
 			<h4>Sign up</h4>
 			<form id="signup-form">
 				<div class="input-field">
@@ -85,29 +102,35 @@
 				<input type="text" id="signup-bio" autocomplete="off" required />
 				<label for="signup-bio">Write about yourself..</label>
 				</div>	
+				<div class="image-preview">
+					<img src="assets/user2.png">
+				</div>
 				<div class="file-field input-field">
 					<div class="btn">
 					  <span>upload Image</span>
-					  <input type="file" accept="image/x-png,image/gif,image/jpeg" id="signup-file">
+					  <input type="file" onchange="loadFile(event)" accept="image/x-png,image/gif,image/jpeg" id="signup-file">
 					</div>
 					<div class="file-path-wrapper">
 					  <input class="file-path validate" type="text">
 					</div>
+					<!-- <div class="image-preview"></div> -->
 				</div>
 				<div class="center-align">
 					<button class="btn #263238 blue-grey darken-4 z-depth-0"  >Sign up</button>
 				</div>
-				<div class="signup-loading">
-				</div>
 			</form>
-			</div>
+		</div>
 		</div>
 
 
-	<!--Modal for login-->
-		<div id="modal-login" class="modal">
-			<div class="modal-content">
+	<!--Div for login-->
+		<div id="modal-login" class="visuallyhidden grey lighten-2" style="
+		box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;
+		text-align: center;width: 1000px;height: 550px;top:0;bottom: 0;left: 0;right: 0;margin: auto;
+		">
+			<br /><br />
 			<h4>Login</h4><br />
+			<div class="container center-align">
 			<form id="login-form">
 				<div class="input-field">
 				<input type="email" id="login-email" autocomplete="off" required />
@@ -125,32 +148,30 @@
 				<div class="login-loading">
 				</div>
 			</form>
-			</div>
+		</div>
 		</div>
 
 
-	<!--Modal to show account details-->
-		<div id="modal-account" class="modal">
-			<div class="modal-content center-align">
+	<!--Div to show account details-->
+		<div id="modal-account" class="visuallyhidden grey lighten-2" style="
+		box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;
+		text-align: center;width: 1000px;height: 550px;top:0;bottom: 0;left: 0;right: 0;margin: auto;
+		">
+			<div class="center-align container">
+				<br /><br />
 			<h4>Account Details</h4><br />
+			<div class="uploadedImage">
+			</div>
+			<div class="bio"></div>
 			<div class="account-details"></div>
 			</div>
 		</div>
+	
 
-	<!--Modal to Bio-->
-	<div id="modal-bio" class="modal">
-		<div class="modal-content center-align">
-		<h4>About Me</h4><br />
-		<div class="uploadedImage">
-		</div>
-		<div class="bio"></div>
-		</div>
-
-	</div>	
-
-	<!--Modal to show forgot password-->
-		<div id="modal-forgot" class="modal">
+	<!--Div to show forgot password-->
+		<div id="modal-forgot" class="modal grey lighten-2" >
 			<div class = "modal-content center-align">
+				<br /><br />
 				<h4>Forgot Password</h4><br />
 				<form id="forgot-form">
 					<div class="input-field">
@@ -193,7 +214,8 @@
   <!--External and internal scripts-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="scripts/index.js"></script>
+	<script src="scripts/router.js"></script>
 	<script src="scripts/auth.js"></script>
+	<script src="scripts/index.js"></script>
 </body>
 </html>
