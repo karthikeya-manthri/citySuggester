@@ -41,7 +41,7 @@ function checkPassword(str) {
 }
 
 //Function to load the image
-var loadFile = (file) => {
+var loadFile = (file, type) => {
     var input = file.target;
 
     if (input.files.length) {
@@ -53,12 +53,12 @@ var loadFile = (file) => {
             var dataURL = reader.result;
             //console.log(dataURL)
             //console.log(output)
-            invokeLoadImage(dataURL);
+            invokeLoadImage(dataURL,type);
         };
         reader.readAsDataURL(input.files[0]);
     }
     else {
-        invokeLoadImage("assets/user2.png")
+        invokeLoadImage("assets/user2.png",type)
     }
 
 }
@@ -71,11 +71,12 @@ if (logout) {
         //Logging out user(asynchronous)
         document.getElementById("overlay").style.display = "block";
         auth.signOut().then(() => {
-            // console.log("User Successfully logged out");
+            window.location.hash = "#"
+            //console.log("User Successfully logged out");
             document.getElementById("overlay").style.display = "none";
             loginForm.reset();
-            signupForm.reset();
-            window.location.hash = "#";
+            signupForm.reset(); 
+            location.reload()
         }).catch((err)=>{
             document.getElementById("overlay").style.display = "none";
         })
@@ -110,30 +111,83 @@ if (forgotForm) {
     });
 }
 
-//Email Verifcation
-handleVerify = ()=>{
-    document.getElementById("overlay").style.display = "block";
-    auth.onAuthStateChanged(usr=>{
-        if(usr){
-        const verify = document.querySelector(".verifyEmail");
-        usr.sendEmailVerification().then(() => {
-            //console.log("success")
-            document.getElementById("overlay").style.display = "none";
-            M.toast({ html: '<font color="green">Verification link is sent!</font>', classes: 'rounded white' });
-            verify.innerHTML = "";
-        }).catch(error => {
-            console.log(error)
-            document.getElementById("overlay").style.display = "none";
-            M.toast({ html: '<font color="red">Please try again</font>', classes: 'rounded white' });
+
+//Update Bio
+const updateBio = document.querySelector("#edit-bio-form");
+if (updateBio) {
+    updateBio.addEventListener("submit", (e) => {
+        e.preventDefault();
+        document.getElementById("overlay").style.display = "block";
+        const newBio = updateBio['edit-bio'].value;
+        const modal = document.querySelector("#modal-edit-bio");
+        auth.onAuthStateChanged(usr=>{
+            db.collection("users").doc(usr.uid).set({
+                bio: newBio,
+                loginCount: 1
+            }).then(()=>{
+                updateBio.reset();
+                M.Modal.getInstance(modal).close();
+                document.getElementById("overlay").style.display = "none";
+                M.toast({ html: '<font color="green">Bio Updated Sucessfully!</font>', classes: 'rounded white' });
+                location.reload();
+            }).catch((err)=>{
+                document.getElementById("overlay").style.display = "none";
+                M.toast({ html: '<font color="green">Please Try Again</font>', classes: 'rounded white' });
+            });
         })
-        }
-    })                
+        
+    });
 }
+
+//Update Image
+auth.onAuthStateChanged(usr=>{
+    const updateImage = document.querySelector("#edit-image-form");
+    if(updateImage) {
+        updateImage.addEventListener("submit",(e) => {
+            e.preventDefault();
+            const modal = document.querySelector("#modal-edit-img");
+            document.getElementById("overlay").style.display = "block";
+            storageRef = storage.ref(usr.email);
+            storageRef.put(img).then(() => {
+                document.getElementById("overlay").style.display = "none";
+                M.toast({ html: '<font color="green">Image Updated Sucessfully!</font>', classes: 'rounded white' });
+                M.Modal.getInstance(modal).close();
+                updateImage.reset();
+                location.reload();
+            }) .catch(err=>{
+                document.getElementById("overlay").style.display = "none";
+                M.toast({ html: '<font color="red">Please Try Again</font>', classes: 'rounded white' });
+            })
+        });
+}
+
+
+});
+
+
+//Email Verifcation
+// handleVerify = ()=>{
+//     document.getElementById("overlay").style.display = "block";
+//     auth.onAuthStateChanged(usr=>{
+//         if(usr){
+//         const verify = document.querySelector(".verifyEmail");
+//         usr.sendEmailVerification().then(() => {
+//             //console.log("success")
+//             document.getElementById("overlay").style.display = "none";
+//             M.toast({ html: '<font color="green">Verification link is sent!</font>', classes: 'rounded white' });
+//             verify.innerHTML = "";
+//         }).catch(error => {
+//             console.log(error)
+//             document.getElementById("overlay").style.display = "none";
+//             M.toast({ html: '<font color="red">Please try again</font>', classes: 'rounded white' });
+//         })
+//         }
+//     })                
+// }
 
 //Invoke Home page on Load
 invokeHome = () => {
     const bodyMain = document.querySelector(".main");
-    const verify = document.querySelector(".verifyEmail");
      // Logged in content
     const loggedInHTML = `
                         <center>
@@ -141,15 +195,6 @@ invokeHome = () => {
                         <br><br>
                         <h5> You have logged in successfully </h5>
                         </center>
-                        `;
-    // Verification of Email content 
-    const verfiyEmail = `
-                        <center>
-                            <form id="verification">
-                                <button class="btn #263238 blue-grey darken-4 z-depth-0" onclick="handleVerify()">Verify Email</button>
-                            </form>
-                        </center>
-
                         `;
     const loggedOutHTML = `
                             <center>
@@ -159,14 +204,8 @@ invokeHome = () => {
     auth.onAuthStateChanged(usr=>{
         if(usr){
             bodyMain.innerHTML = loggedInHTML;
-            if(!usr.emailVerified){
-                verify.innerHTML = verfiyEmail;
-            } else{
-                verify.innerHTML = "";
-            }
         } else{
             bodyMain.innerHTML = loggedOutHTML;
-            verify.innerHTML = "";
         }
     })
 }
@@ -178,7 +217,7 @@ invokeLogin = () => {
     if (loginForm) {
         
         loginForm.addEventListener("submit", (e) => {
-            console.log("inside login button")
+            // console.log("inside login button")
             document.getElementById("overlay").style.display = "block";
             e.preventDefault();
             const email = loginForm['login-email'].value;
@@ -192,7 +231,7 @@ invokeLogin = () => {
                 document.getElementById("overlay").style.display = "none";
                 window.location.hash="#"
                 //Closing the login modal and resetting the form
-                console.log("logged in")
+                // console.log("logged in")
                 loader.innerHTML = "";
                 loginForm.reset();
                 window.location.hash = "#";
@@ -252,13 +291,15 @@ invokeSignup = () => {
                     auth.createUserWithEmailAndPassword(email, password).then(Credential => {
                         //console.log(Credential.user.emailVerified);
                         //Closing the login modal and resetting the form
+                        window.location.hash = "#"
                         db.collection("users").doc(Credential.user.uid).set({
                             bio: signupForm['signup-bio'].value,
                             loginCount: 1
                         });
-                        signupForm.reset();
-                        document.getElementById("overlay").style.display = "none";
-                        window.location.hash = "#"
+                        Credential.user.sendEmailVerification().then(()=>{
+                            signupForm.reset();
+                            document.getElementById("overlay").style.display = "none";
+                        })
 
                     }).catch((error) => {
                         const signupForm = document.querySelector("#signup-form");
@@ -298,11 +339,13 @@ invokeAccount = () => {
     const accountDetails = document.querySelector(".account-details");
     const bio = document.querySelector(".bio");
     const imgPlace = document.querySelector(".uploadedImage");
+    document.getElementById("overlay").style.display = "block";
     auth.onAuthStateChanged(user=>{
         if(user){
+            
             db.collection('users').doc(user.uid).get().then(doc => {
                 const bioDetails = `
-                    <div> <h5><i>${doc.data().bio}</i> <img src="assets/edit2.png" class="modal-trigger" data-target="modal-edit-bio" style="width:35px; height:35px; cursor:pointer;"> </h5> <br></br>
+                    <div> <h5><i>${doc.data().bio}</i> </h5> <br></br>
                     </div>
                 `;
                 if(bio)
@@ -313,7 +356,7 @@ invokeAccount = () => {
             storageRef.getDownloadURL().then((url) => {
                 imgContent = `
                         <div class="center-align">
-                            <img src=${url} style="width:130px; height:100px"> <img src="assets/edit2.png" class="modal-trigger" data-target="modal-edit-img" style="width:35px; height:35px; cursor:pointer" onclick="handleEdit(${user.email},2)">
+                            <img src=${url} style="style="max-width:100%; height:auto;"">
                         <div>
                     `;
                 if(imgPlace)
@@ -323,11 +366,10 @@ invokeAccount = () => {
             });
             // Details of logged user
             const userDetails = `
-                    <div> <h6> <b>Email</b>: <i>${user.email}</i> </h6> <br></br>
+                    <div> <h6> <b>Email</b>: <i>${user.email}</i> </h6>
                         <h6> <b>Account-Verified</b>: <i>${user.emailVerified}</i></h6>
                     </div>
                 `;
-        
             if(accountDetails)
             accountDetails.innerHTML = userDetails;
         } else {
@@ -337,6 +379,7 @@ invokeAccount = () => {
         }
 
     })
+    document.getElementById("overlay").style.display = "none";
 }
 
 //Invoke Admin form after load
@@ -373,10 +416,16 @@ invokeAdmin = () => {
 }
 
 //Load image in signup
-invokeLoadImage = (url) => {
-    let output = document.querySelector('.image-preview');
-    output.innerHTML = `
-                        <img src=${url}>
+invokeLoadImage = (url,type) => {
+    let output = document.querySelector('.image-preview'); 
+    let outputEdit = document.querySelector('.image-preview-edit');
+    if(type === 1)
+        output.innerHTML = `
+                        <img style="max-width:100%; height:auto;" src=${url}>
                        `;
+    else 
+        outputEdit.innerHTML = `
+                            <img style="max-width:100%; height:auto;" src=${url}>
+                        `;
 }
 

@@ -1,11 +1,10 @@
 const home=`
           <div class = "main" style="margin-top: 200px;"></div><br>
-          <div class = "verifyEmail"></div>
           `;
 const admin = `
-          <div id="modal-admin" class="grey lighten-2" style="
+          <div id="modal-admin" class="grey lighten-3" style="
           box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;
-          text-align: center;width: 1000px;height: 550px;top:0;bottom: 0;left: 0;right: 0;margin: auto;
+          text-align: center;width: 1000px;height: 90%;top:0;bottom: 0;left: 0;right: 0;margin: auto;
           ">
               <div class="center-align">
                 <br /><br />
@@ -15,7 +14,7 @@ const admin = `
               <div class="input-field">
                 <input type="email" id="admin-email" autocomplete="off" required />
               <label for="signup-email">Email address</label>
-              </div><button class="btn #263238 blue-grey darken-4 z-depth-0">Make Admin</button>
+              </div><button class="btn blue-grey darken-4">Make Admin</button>
               <br>
               <div class="admin-loading">
               </div>
@@ -23,9 +22,9 @@ const admin = `
           </div>
           `;
 const signup = `
-              <div id="modal-signup" class="grey lighten-2" style="
+              <div id="modal-signup" class="grey lighten-3" style="
               box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;
-              text-align: center;width: 1000px;height: 650px;top:0;bottom: 0;left: 0;right: 0;margin: auto;
+              text-align: center;width: 1000px;height: auto;top:0;bottom: 0;left: 0;right: 0;margin: auto;
               ">
               <div class="container">
                 <br />
@@ -54,7 +53,7 @@ const signup = `
                   <div class="file-field input-field">
                     <div class="btn">
                       <span>upload Image</span>
-                      <input type="file" onchange="loadFile(event)" accept="image/x-png,image/gif,image/jpeg" id="signup-file">
+                      <input type="file" onchange="loadFile(event,1)" accept="image/x-png,image/gif,image/jpeg" id="signup-file">
                     </div>
                     <div class="file-path-wrapper">
                       <input class="file-path validate" type="text">
@@ -69,9 +68,9 @@ const signup = `
               </div>
               `;
 const login = `
-              <div id="modal-login" class="grey lighten-2" style="
+              <div id="modal-login" class="grey lighten-3" style="
               box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;
-              text-align: center;width: 1000px;height: 550px;top:0;bottom: 0;left: 0;right: 0;margin: auto;
+              text-align: center;width: 1000px;height: 90%;top:0;bottom: 0;left: 0;right: 0;margin: auto;
               ">
                 <br /><br />
                 <h4>Login</h4><br />
@@ -98,16 +97,19 @@ const login = `
 
               `;
 const account = `
-                <div id="modal-account" class="grey lighten-2" style="
+                <div id="modal-account" class="grey lighten-3" style="
                 box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;
-                text-align: center;width: 1000px;height: 550px;top:0;bottom: 0;left: 0;right: 0;margin: auto;
+                text-align: center;width: 1000px;height: 90%;margin-top: -200px;bottom: 0;left: 0;right: 0;margin: auto;
                 ">
                   <div class="center-align container">
                     <br /><br />
-                  <h4>Account Details</h4><br />
+                  <h5><b> &nbsp &nbsp Profile Photo <img src="assets/edit2.png" class="modal-trigger" data-target="modal-edit-img" style="width:27px; height:27px; cursor:pointer;"> </b></h5>
                   <div class="uploadedImage">
                   </div>
+                  <br />
+                  <h5><b> About you  <img src="assets/edit2.png" class="modal-trigger" data-target="modal-edit-bio" style="width:27px; height:27px; cursor:pointer"> </b> </h5>
                   <div class="bio"></div>
+                  
                   <div class="account-details"></div>
                   </div>
                 </div>

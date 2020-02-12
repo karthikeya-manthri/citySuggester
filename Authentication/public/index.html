@@ -74,7 +74,7 @@
 				<form id="edit-bio-form">
 					<div class="input-field">
 						<input type="text" id="edit-bio" autocomplete="off" required />
-						<label for="forgotPass-email">Bio</label>
+						<label for="edit-bio">Bio</label>
 					</div>
 				<button class="btn #263238 blue-grey darken-4 z-depth-0">Submit</button>
 				</form>
@@ -85,20 +85,22 @@
 		<div id="modal-edit-img" class="modal grey lighten-2" >
 			<div class = "modal-content center-align">
 				<br /><br />
-				<h4>Write about yourself..</h4><br />
-				<div class="image-preview">
-					<img src="assets/user2.png">
-				</div>
-				<div class="file-field input-field">
-					<div class="btn">
-						<span>upload Image</span>
-						<input type="file" onchange="loadFile(event)" accept="image/x-png,image/gif,image/jpeg" id="signup-file">
+				<h4>Update Image</h4><br />
+				<form id="edit-image-form">
+					<div class="image-preview-edit">
+						<img src="assets/user2.png">
 					</div>
-					<div class="file-path-wrapper">
-						<input class="file-path validate" type="text">
+					<div class="file-field input-field">
+						<div class="btn">
+							<span>upload Image</span>
+							<input type="file" onchange="loadFile(event,2)" accept="image/x-png,image/gif,image/jpeg" id="edit-file">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
 					</div>
-					<!-- <div class="image-preview"></div> -->
-				</div>
+					<button class="btn #263238 blue-grey darken-4 z-depth-0">Submit</button>
+			</form>
 			</div>
 		</div>
 	
@@ -131,8 +133,8 @@
   <!--External and internal scripts-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="scripts/templates.js"></script>
 	<script src="scripts/auth.js"></script>
+	<script src="scripts/templates.js"></script>
 	<script src="scripts/index.js"></script>
 	
 </body>
