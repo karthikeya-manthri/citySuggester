@@ -4,7 +4,7 @@ const home=`
 const admin = `
           <div id="modal-admin" class="grey lighten-3" style="
           box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;
-          text-align: center;width: 1000px;height: 90%;top:0;bottom: 0;left: 0;right: 0;margin: auto;
+          text-align: center;width: 1000px;height: 550px;top:0;bottom: 0;left: 0;right: 0;margin: auto;
           ">
               <div class="center-align">
                 <br /><br />
@@ -70,7 +70,7 @@ const signup = `
 const login = `
               <div id="modal-login" class="grey lighten-3" style="
               box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;
-              text-align: center;width: 1000px;height: 90%;top:0;bottom: 0;left: 0;right: 0;margin: auto;
+              text-align: center;width: 1000px;height: 550px;top:0;bottom: 0;left: 0;right: 0;margin: auto;
               ">
                 <br /><br />
                 <h4>Login</h4><br />
@@ -99,7 +99,7 @@ const login = `
 const account = `
                 <div id="modal-account" class="grey lighten-3" style="
                 box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;
-                text-align: center;width: 1000px;height: 90%;margin-top: -200px;bottom: 0;left: 0;right: 0;margin: auto;
+                text-align: center;width: 1000px;height: 550px;top:0;bottom: 0;left: 0;right: 0;margin: auto;
                 ">
                   <div class="center-align container">
                     <br /><br />
