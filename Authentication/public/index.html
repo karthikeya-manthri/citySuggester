@@ -1,5 +1,7 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta name="Description" content="Utilizing the functionalities of Firebase">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -7,6 +9,12 @@
 		<link rel="stylesheet" href="index.css">	
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 	<title>Authentication</title>
+	  <!--External and internal scripts-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" defer></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
+		<script src="scripts/auth.js" defer></script>
+		<script src="scripts/templates.js" defer></script>
+		<script src="scripts/index.js" defer></script>
 </head>
 
 
@@ -17,7 +25,7 @@
 			top: 0;">
 			<div class="nav-wrapper container" >
 			<a href="#" class="brand-logo">
-				<img src="assets/logo.png" style="width: 90px; height: 80px;">
+				<img src="assets/logo.png" alt="Logo" style="width: 90px; height: 80px;">
 			</a>
 			<ul id="nav-mobile" class="right ">
 				<li class="logged-in" style="display:none;">
@@ -44,9 +52,7 @@
 		</nav>
 
 	<!-- Overlay to show loading icon -->
-	<div id="overlay">
-		<div id="loader"><img src="assets/loader2.gif" style="width: 70px;height: 70px;"></div>
-	</div>
+
 
 	<div id="root"></div>
 
@@ -88,7 +94,7 @@
 				<h4>Update Image</h4><br />
 				<form id="edit-image-form">
 					<div class="image-preview-edit">
-						<img src="assets/user2.png">
+						<img src="assets/user2.png" alt="user-image">
 					</div>
 					<div class="file-field input-field">
 						<div class="btn">
@@ -102,6 +108,9 @@
 					<button class="btn #263238 blue-grey darken-4 z-depth-0">Submit</button>
 			</form>
 			</div>
+		</div>
+		<div id="overlay">
+			<div id="loader"><img src="assets/loader2.gif" alt="loader" style="width: 70px;height: 70px;"></div>
 		</div>
 	
 	<!--Firebase SDK-->
@@ -130,12 +139,7 @@
 		const storage = firebase.storage();
 		</script>
 
-  <!--External and internal scripts-->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="scripts/auth.js"></script>
-	<script src="scripts/templates.js"></script>
-	<script src="scripts/index.js"></script>
+
 	
 </body>
 </html>

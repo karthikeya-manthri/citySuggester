@@ -48,7 +48,7 @@ const signup = `
                   <label for="signup-bio">Write about yourself..</label>
                   </div>	
                   <div class="image-preview">
-                    <img src="assets/user2.png">
+                    <img src="assets/user2.png" alt="user-image">
                   </div>
                   <div class="file-field input-field">
                     <div class="btn">
@@ -103,11 +103,12 @@ const account = `
                 ">
                   <div class="center-align container">
                     <br /><br />
-                  <h5><b> &nbsp &nbsp Profile Photo <img src="assets/edit2.png" class="modal-trigger" data-target="modal-edit-img" style="width:27px; height:27px; cursor:pointer;"> </b></h5>
+                  <h5><b> &nbsp &nbsp Profile Photo <img src="assets/edit2.png" alt="edit-icon" class="modal-trigger" data-target="modal-edit-img" style="width:27px; height:27px; cursor:pointer;"> </b></h5>
+                  
                   <div class="uploadedImage">
                   </div>
                   <br />
-                  <h5><b> About you  <img src="assets/edit2.png" class="modal-trigger" data-target="modal-edit-bio" style="width:27px; height:27px; cursor:pointer"> </b> </h5>
+                  <h5><b> About you  <img src="assets/edit2.png" alt="edit-icon" class="modal-trigger" data-target="modal-edit-bio" style="width:27px; height:27px; cursor:pointer"> </b> </h5>
                   <div class="bio"></div>
                   
                   <div class="account-details"></div>

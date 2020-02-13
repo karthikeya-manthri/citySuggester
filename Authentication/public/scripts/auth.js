@@ -47,6 +47,7 @@ var loadFile = (file, type) => {
     if (input.files.length) {
         if (file.target)
             img = file.target.files[0];
+            //console.log(img)
         //console.log(file.target.files[0]);
         var reader = new FileReader();
         reader.onload = function () {
@@ -123,7 +124,6 @@ if (updateBio) {
         auth.onAuthStateChanged(usr=>{
             db.collection("users").doc(usr.uid).set({
                 bio: newBio,
-                loginCount: 1
             }).then(()=>{
                 updateBio.reset();
                 M.Modal.getInstance(modal).close();
@@ -139,6 +139,7 @@ if (updateBio) {
     });
 }
 
+
 //Update Image
 auth.onAuthStateChanged(usr=>{
     const updateImage = document.querySelector("#edit-image-form");
@@ -147,7 +148,7 @@ auth.onAuthStateChanged(usr=>{
             e.preventDefault();
             const modal = document.querySelector("#modal-edit-img");
             document.getElementById("overlay").style.display = "block";
-            storageRef = storage.ref(usr.email);
+            storageRef = storage.ref(usr.uid);
             storageRef.put(img).then(() => {
                 document.getElementById("overlay").style.display = "none";
                 M.toast({ html: '<font color="green">Image Updated Sucessfully!</font>', classes: 'rounded white' });
@@ -163,7 +164,6 @@ auth.onAuthStateChanged(usr=>{
 
 
 });
-
 
 //Email Verifcation
 // handleVerify = ()=>{
@@ -191,7 +191,7 @@ invokeHome = () => {
      // Logged in content
     const loggedInHTML = `
                         <center>
-                        <img src="assets/smiley.png" style="width: 150px; height: 150px;">
+                        <img src="assets/smiley.png" style="width: 150px; height: 150px;" alt="smiley">
                         <br><br>
                         <h5> You have logged in successfully </h5>
                         </center>
@@ -284,22 +284,20 @@ invokeSignup = () => {
             }
 
             //if passwords match
-            else {
-                storageRef = storage.ref(email);
-                storageRef.put(img).then(() => {
+            else {          
                     //Signing up the user (asynchronous)
                     auth.createUserWithEmailAndPassword(email, password).then(Credential => {
                         //console.log(Credential.user.emailVerified);
                         //Closing the login modal and resetting the form
                         window.location.hash = "#"
+                        storageRef = storage.ref(Credential.user.uid);
+                        storageRef.put(img)
                         db.collection("users").doc(Credential.user.uid).set({
                             bio: signupForm['signup-bio'].value,
-                            loginCount: 1
                         });
                         Credential.user.sendEmailVerification().then(()=>{
                             signupForm.reset();
                             document.getElementById("overlay").style.display = "none";
-                        })
 
                     }).catch((error) => {
                         const signupForm = document.querySelector("#signup-form");
@@ -352,17 +350,19 @@ invokeAccount = () => {
                 bio.innerHTML = bioDetails;
             });
 
-            storageRef = storage.ref(user.email);
+            storageRef = storage.ref(user.uid);
             storageRef.getDownloadURL().then((url) => {
                 imgContent = `
                         <div class="center-align">
-                            <img src=${url} style="style="max-width:100%; height:auto;"">
+                            <img src=${url} style="style="max-width:100%; height:auto;"" alt="user-image">
                         <div>
                     `;
                 if(imgPlace)
                 imgPlace.innerHTML = imgContent;
+                document.getElementById("overlay").style.display = "none";
             }).catch(error => {
                 console.log(error);
+                document.getElementById("overlay").style.display = "none";
             });
             // Details of logged user
             const userDetails = `
@@ -379,7 +379,6 @@ invokeAccount = () => {
         }
 
     })
-    document.getElementById("overlay").style.display = "none";
 }
 
 //Invoke Admin form after load
@@ -419,13 +418,15 @@ invokeAdmin = () => {
 invokeLoadImage = (url,type) => {
     let output = document.querySelector('.image-preview'); 
     let outputEdit = document.querySelector('.image-preview-edit');
-    if(type === 1)
+    if(type === 1){
         output.innerHTML = `
-                        <img style="max-width:100%; height:auto;" src=${url}>
+                        <img style="max-width:100%; height:auto;" src=${url} alt="user-image">
                        `;
-    else 
+    } else{ 
         outputEdit.innerHTML = `
-                            <img style="max-width:100%; height:auto;" src=${url}>
+                            <img style="max-width:100%; height:auto;" src=${url} alt="user-image">
                         `;
+
+    }
 }
 
