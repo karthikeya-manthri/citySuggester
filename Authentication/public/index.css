@@ -1,29 +1,87 @@
+.container {
+  padding: 2px 16px;
+}
+li {
+  display: none;
+}
 img {
   border: 3px solid black;
   border-radius: 15px;
   padding: 5px;
-  width: 150px;
-  height:140px;
+  width: 20%;
+  height: 20%;
 }
-.container {
-  padding: 2px 16px;
+.logo {
+  margin-bottom: 2%;
+  border-radius: 15px;
+  padding: 5px;
+  width: 40%;
+  height: 30%;
+}
+.main {
+  margin-top: 20%;
+}
+.hide {
+  display: none;
+}
+.contentPage {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  text-align: center;
+  width: 70%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  margin-top: 0.5%;
+  padding-bottom: 0.5%;
+}
+.homeImg{
+  width:10%;
+  height:10%;
+}
+.adminStyle {
+  padding-bottom: 5.5%;
+  max-width: 500px;
 }
 #overlay {
   position: fixed;
-  display: none; 
-  width: 100%; 
-  height: 100%; 
+  display: none;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.3); 
-  z-index: 100000000; 
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 10000000;
 }
-#loader{
+#loader {
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%);
+  left: 55%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  /* can add for all vendors */
+}
+.navStyle {
+  position: sticky;
+  top: 0;
+}
+.rightStyle {
+  text-align: right;
+}
+.editIcon {
+  width: 5%;
+  height: 5%;
+  cursor: pointer;
+}
+.loaderImg{
+  width:35%;
+  height:35%;
+}
+.sidenavStyle{
+  background-color: #263238;
 }

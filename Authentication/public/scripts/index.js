@@ -94,6 +94,8 @@ window.addEventListener("hashchange",()=>{
 // On DOM Load
   window.addEventListener("DOMContentLoaded", function(ev) {
     //console.log("DOMContentLoaded event");
+    var elems = document.querySelectorAll('.sidenav');
+    M.Sidenav.init(elems);
     if(isUserLogged){
     NavUI(user).then(()=>{
       render()

@@ -11,47 +11,64 @@
 	<title>Authentication</title>
 	  <!--External and internal scripts-->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" defer></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
-		<script src="scripts/auth.js" defer></script>
-		<script src="scripts/templates.js" defer></script>
-		<script src="scripts/index.js" defer></script>
+		<script src="./scripts/auth.js" defer></script>
+		<script src="./scripts/templates.js" defer></script>
+		<script src="./scripts/index.js" defer></script>
 </head>
 
 
 <body class="grey lighten-2">
-
 	<!-- Header navigation bar -->
-		<nav class="z-depth-0 #263238 blue-grey darken-4" style="position: sticky;
-			top: 0;">
-			<div class="nav-wrapper container" >
-			<a href="#" class="brand-logo">
-				<img src="assets/logo.png" alt="Logo" style="width: 90px; height: 80px;">
+		<nav class=" navStyle z-depth-0 #263238 blue-grey darken-4">
+			<div class="nav-wrapper container">
+			<a href="#" class="brand-logo hide-on-med-and-down">
+				<img class="logo" src="./assets/logo.png" alt="Logo">
 			</a>
-			<ul id="nav-mobile" class="right ">
-				<li class="logged-in" style="display:none;">
+			<a href="#" data-target="mobile-nav" class="sidenav-trigger"><b>Menu</b></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li class="logged-in" >
 					<a href ="#" class="white-text " id="home">Home</a>
 				</li>				
-				<li class="logged-in" style="display:none;">
+				<li class="logged-in">
 					<a href="#account" class="white-text " >Account</a>
 				</li>
-				<li class="admin" style="display:none;">
+				<li class="admin">
 					<a  href="#admin" class="white-text ">Add Admin</a>	
 				</li>
-				<li class="logged-in" style="display:none;">
+				<li class="logged-in">
 					<a class="white-text" id="logout">Logout</a>
 				</li>
-				<li class="logged-out" style="display:none;">
+				<li class="logged-out">
 					<a href="#login" class="white-text ">Login</a>
 				</li>
-				<li class="logged-out" style="display:none;">
+				<li class="logged-out"]>
 					<a href="#signup" class="white-text ">Sign up</a>
 				</li>
-				</span>
+
 			</ul>
 			</div>
 		</nav>
-
-	<!-- Overlay to show loading icon -->
+	
+		<ul class="sidenav" id="mobile-nav">
+				<li class="logged-in" >
+					<a href ="#" class="black-text " id="home">Home</a>
+				</li>				
+				<li class="logged-in">
+					<a href="#account" class="black-text " >Account</a>
+				</li>
+				<li class="admin">
+					<a  href="#admin" class="black-text ">Add Admin</a>	
+				</li>
+				<li class="logged-in">
+					<a class="black-text" id="logout">Logout</a>
+				</li>
+				<li class="logged-out">
+					<a href="#login" class="black-text ">Login</a>
+				</li>
+				<li class="logged-out"]>
+					<a href="#signup" class="black-text ">Sign up</a>
+				</li>
+		</ul>
 
 
 	<div id="root"></div>
@@ -66,10 +83,9 @@
 						<input type="email" id="forgotPass-email" autocomplete="off" required />
 						<label for="forgotPass-email">Enter Email address</label>
 					</div>
-				<button class="btn #263238 blue-grey darken-4 z-depth-0">Submit</button>
+				<button class="btn  blue-grey darken-4 z-depth-0">Submit</button>
 				</form>
 			</div>
-			<div class="forgot-loading"></div>
 		</div>
 
 	<!--Modal to show edit bio-->
@@ -94,7 +110,7 @@
 				<h4>Update Image</h4><br />
 				<form id="edit-image-form">
 					<div class="image-preview-edit">
-						<img src="assets/user2.png" alt="user-image">
+						<img src="./assets/user2.png" alt="user-image">
 					</div>
 					<div class="file-field input-field">
 						<div class="btn">
@@ -109,8 +125,10 @@
 			</form>
 			</div>
 		</div>
+
+<!-- Overlay to show loading icon -->
 		<div id="overlay">
-			<div id="loader"><img src="assets/loader2.gif" alt="loader" style="width: 70px;height: 70px;"></div>
+			<div id="loader"><img class="loaderImg" src="./assets//loader2.gif" alt="loader" ></div>
 		</div>
 	
 	<!--Firebase SDK-->
@@ -119,27 +137,6 @@
 		<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-functions.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-storage.js"></script>
-		<script>
-		var firebaseConfig = {
-			apiKey: "AIzaSyBS99Hu5LjulLZXv5ktX_ngKukWenAn1AQ",
-			authDomain: "task1-authentication.firebaseapp.com",
-			databaseURL: "https://task1-authentication.firebaseio.com",
-			projectId: "task1-authentication",
-			storageBucket:"task1-authentication.appspot.com",
-			appId: "1:1084391945616:web:b7b70218aa5bbb81972f15",
-			measurementId: "G-BLGDRRXSJL"
-		};
-		// Initialize Firebase
-		firebase.initializeApp(firebaseConfig);
-
-		// auth,firestore reference
-		const auth = firebase.auth();
-		const db = firebase.firestore();
-		const functions = firebase.functions();
-		const storage = firebase.storage();
-		</script>
-
-
-	
+		<script src="./scripts/config.js"></script>
 </body>
 </html>

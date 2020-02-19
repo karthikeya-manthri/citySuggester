@@ -1,5 +1,4 @@
 const logout = document.querySelector('#logout');
-var loading = "";
 var img;
 
 //Function to reset a field
@@ -91,9 +90,7 @@ const forgotForm = document.querySelector("#forgot-form");
 if (forgotForm) {
     forgotForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        var loader = document.querySelector(".forgot-loading")
         document.getElementById("overlay").style.display = "block";
-        loader.innerHTML = loading;
         const email = forgotForm['forgotPass-email'].value;
         const modal = document.querySelector("#modal-forgot");
         auth.sendPasswordResetEmail(email).then(() => {
@@ -102,9 +99,7 @@ if (forgotForm) {
             document.getElementById("overlay").style.display = "none";
             M.toast({ html: '<font color="green">Reset link has been sent!</font>', classes: 'rounded white' });
         }).catch((error) => {
-            var loader = document.querySelector(".forgot-loading")
             //M.Modal.getInstance(modal).close();
-            loader.innerHTML = "";
             document.getElementById("overlay").style.display = "none";
             forgotForm.reset();
             M.toast({ html: '<font color="red">Email does not exist</font>', classes: 'rounded white' });
@@ -121,6 +116,7 @@ if (updateBio) {
         document.getElementById("overlay").style.display = "block";
         const newBio = updateBio['edit-bio'].value;
         const modal = document.querySelector("#modal-edit-bio");
+        if(newBio){
         auth.onAuthStateChanged(usr=>{
             db.collection("users").doc(usr.uid).set({
                 bio: newBio,
@@ -134,7 +130,10 @@ if (updateBio) {
                 document.getElementById("overlay").style.display = "none";
                 M.toast({ html: '<font color="green">Please Try Again</font>', classes: 'rounded white' });
             });
-        })
+        })} else{
+            document.getElementById("overlay").style.display = "none";
+            M.toast({ html: '<font color="red">Please write something.</font>', classes: 'rounded white' });
+        }
         
     });
 }
@@ -149,6 +148,7 @@ auth.onAuthStateChanged(usr=>{
             const modal = document.querySelector("#modal-edit-img");
             document.getElementById("overlay").style.display = "block";
             storageRef = storage.ref(usr.uid);
+            if(img){
             storageRef.put(img).then(() => {
                 document.getElementById("overlay").style.display = "none";
                 M.toast({ html: '<font color="green">Image Updated Sucessfully!</font>', classes: 'rounded white' });
@@ -158,7 +158,10 @@ auth.onAuthStateChanged(usr=>{
             }) .catch(err=>{
                 document.getElementById("overlay").style.display = "none";
                 M.toast({ html: '<font color="red">Please Try Again</font>', classes: 'rounded white' });
-            })
+            })} else{
+                document.getElementById("overlay").style.display = "none";
+                M.toast({ html: '<font color="red">Please Select an Image</font>', classes: 'rounded white' });
+            }
         });
 }
 
@@ -191,7 +194,7 @@ invokeHome = () => {
      // Logged in content
     const loggedInHTML = `
                         <center>
-                        <img src="assets/smiley.png" style="width: 150px; height: 150px;" alt="smiley">
+                        <img class="homeImg" src="assets/smiley.png" alt="smiley">
                         <br><br>
                         <h5> You have logged in successfully </h5>
                         </center>
@@ -222,8 +225,6 @@ invokeLogin = () => {
             e.preventDefault();
             const email = loginForm['login-email'].value;
             const password = loginForm['login-password'].value;
-            var loader = document.querySelector(".login-loading")
-            loader.innerHTML = loading;
             
 
             //Logging User(asynchronous)
@@ -232,7 +233,6 @@ invokeLogin = () => {
                 window.location.hash="#"
                 //Closing the login modal and resetting the form
                 // console.log("logged in")
-                loader.innerHTML = "";
                 loginForm.reset();
                 window.location.hash = "#";
                 
@@ -240,9 +240,6 @@ invokeLogin = () => {
                 //if credentials are wrong / doesn't exist.
                 // M.Modal.getInstance(modal).close();
                 document.getElementById("overlay").style.display = "none";
-                console.log(error)
-                var loader = document.querySelector(".login-loading")
-                loader.innerHTML = "";
                 if(error.code==="auth/wrong-password"){
                     resetField(document.getElementById("login-password"))
                     M.toast({ html: '<font color="red">Please re-check Password</font>', classes: 'rounded white' });
@@ -300,8 +297,12 @@ invokeSignup = () => {
                             document.getElementById("overlay").style.display = "none";
 
                     }).catch((error) => {
+                        console.log(error);
+                        document.getElementById("overlay").style.display = "none";
+                    });;
+                }).catch(error => {
+                    console.log(error,"error")
                         const signupForm = document.querySelector("#signup-form");
-                        var loader = document.querySelector(".signup-loading")
                         document.getElementById("overlay").style.display = "none";
                         console.log("error", error);
                         const signError = document.querySelector(".signup-error");
@@ -322,10 +323,6 @@ invokeSignup = () => {
                         else {
                             signError.innerHTML = "";
                         }
-                    });;
-                }).catch(error => {
-                    console.log(error);
-                    document.getElementById("overlay").style.display = "none";
                 })
             }
         })
@@ -354,7 +351,7 @@ invokeAccount = () => {
             storageRef.getDownloadURL().then((url) => {
                 imgContent = `
                         <div class="center-align">
-                            <img src=${url} style="style="max-width:100%; height:auto;"" alt="user-image">
+                            <img src=${url} alt="user-image">
                         <div>
                     `;
                 if(imgPlace)
@@ -387,9 +384,6 @@ invokeAdmin = () => {
     if (adminForm) {
         adminForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            var loader = document.querySelector(".admin-loading")
-    
-            loader.innerHTML = loading;
             const adminEmail = document.querySelector('#admin-email').value;
             const addAdminRole = functions.httpsCallable('addAdminRole');
             document.getElementById("overlay").style.display = "block";
@@ -420,11 +414,11 @@ invokeLoadImage = (url,type) => {
     let outputEdit = document.querySelector('.image-preview-edit');
     if(type === 1){
         output.innerHTML = `
-                        <img style="max-width:100%; height:auto;" src=${url} alt="user-image">
+                        <img src=${url} alt="user-image">
                        `;
     } else{ 
         outputEdit.innerHTML = `
-                            <img style="max-width:100%; height:auto;" src=${url} alt="user-image">
+                            <img src=${url} alt="user-image">
                         `;
 
     }
