@@ -257,9 +257,11 @@ invokeLogin = () => {
 invokeSignup = () => {
     const signupForm = document.querySelector("#signup-form");
     // Signup
+    console.log("inside invoke",signupForm);
     if (signupForm) {
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
+            console.log("inside");
             document.getElementById("overlay").style.display = "block";
             //User info
             const email = signupForm['signup-email'].value;

@@ -46,7 +46,6 @@ const signup = `
                           <img src="assets/user3.png" alt="user-image">
                         </div>
                         <input type="file" onchange="loadFile(event,1)" accept="image/x-png,image/gif,image/jpeg" id="signup-file">
-                        </div>
                         <div class="file-path-wrapper">
                           <input class="hide file-path validate" type="text" >
                         </div>
