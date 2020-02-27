@@ -1,4 +1,4 @@
-const home=`
+const home = `
           <div class = "main"></div><br>
           `;
 const admin = `
@@ -17,7 +17,7 @@ const admin = `
           </div>
           `;
 const signup = `
-              <div id="modal-signup" class="grey lighten-3 contentPage">
+              <div id="modal-signup" class="grey lighten-3 extraContentPage">
               <div class="container">
                 <br />
                 <h4>Sign up</h4>
@@ -36,7 +36,7 @@ const signup = `
                   </div>
                   <div class="password-match"></div>
                   <div class="input-field">
-                  <input type="text" id="signup-bio" autocomplete="off" required />
+                  <input type="text" id="signup-bio" autocomplete="off" />
                   <label for="signup-bio">Write about yourself..</label>
                   </div>
                   <div class="center-align"><h6>Upload Image:</h6></div>
@@ -45,7 +45,7 @@ const signup = `
                         <div class="image-preview">
                           <img src="assets/user3.png" alt="user-image">
                         </div>
-                        <input type="file" onchange="loadFile(event,1)" accept="image/x-png,image/gif,image/jpeg" id="signup-file">
+                        <input type="file" onchange="loadFile(event,'SIGNUP')" accept="image/x-png,image/gif,image/jpeg" id="signup-file">
                         <div class="file-path-wrapper">
                           <input class="hide file-path validate" type="text" >
                         </div>
@@ -74,24 +74,22 @@ const login = `
                   </div>
                   <button class="btn #263238 blue-grey darken-4 z-depth-0">Login</button>
                   <br><br>
-                  <div class="rightStyle">
-                    <a class="waves-effect waves-red btn-flat modal-trigger" data-target="modal-forgot">Forgot Password?</a>
-                  </div>
+                  <a class="waves-effect waves-red btn-flat modal-trigger" data-target="modal-forgot">Forgot Password?</a>
                 </form>
               </div>
               </div>
 
               `;
 const account = `
-                <div id="modal-account" class="grey lighten-3 contentPage">
+                <div id="modal-account" class="grey lighten-3 extraContentPage">
                   <div class="center-align container">
                     <br /><br />
-                  <h5><b> &nbsp &nbsp Profile Photo <img src="assets/edit2.png" alt="edit-icon" class="editIcon modal-trigger" data-target="modal-edit-img"> </b></h5>
+                  <h5><b> &nbsp &nbsp Profile Photo <img onclick="handleEditImgClick()" src="assets/edit2.png" alt="edit-icon" class="editIcon modal-trigger" data-target="modal-edit-img"> </b></h5>
                   
                   <div class="uploadedImage">
                   </div>
                   <br />
-                  <h5><b> About you  <img src="assets/edit2.png" alt="edit-icon" class="editIcon modal-trigger" data-target="modal-edit-bio"> </b> </h5>
+                  <h5><b> About you  <img onclick="handleEditBioClick()" src="assets/edit2.png" alt="edit-icon" class="editIcon modal-trigger" data-target="modal-edit-bio"> </b> </h5>
                   <div class="bio"></div>
                   <div class="account-details"></div>
                   </div>

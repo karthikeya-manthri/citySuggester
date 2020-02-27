@@ -23,4 +23,3 @@ exports.addAdminRole = functions.https.onCall((data,context)=>{
             return err;
     });
 });
-

@@ -6,7 +6,7 @@ let user;
 let root = document.getElementById('root');
 
 // Function to render Navbar
-async function NavUI(user){
+const NavUI = (user) => {
     if (isUserLogged) {
         if (user.admin) {
             adminComps.forEach(item => item.style.display = "block");
@@ -18,8 +18,6 @@ async function NavUI(user){
         loggedOutComps.forEach(item => {
             item.style.display = 'none';
         });
-
-        return true
     }
     else {
         //toggling the nav bar components wrt login status
@@ -30,86 +28,79 @@ async function NavUI(user){
         loggedOutComps.forEach(item => {
             item.style.display = 'block';
         });
-        return true;
     }
 }
 
-//Initializing the Modals
-document.addEventListener('DOMContentLoaded', function () {
-
-    //Initializing the modals
-    var modals = document.querySelectorAll('.modal');
-    M.Modal.init(modals);
-
-});
-
 //Function to render content
-render = ()=>{
+const render = () => {
     let hash = window.location.hash
-    if(hash === '#' || hash === ''){
-        root.innerHTML = home;
-        invokeHome();
-    } else if(hash === '#login') {
-        root.innerHTML = login;
-        invokeLogin();
-    } else if(hash === '#signup') {
-        root.innerHTML = signup;
-        invokeSignup();
-    } else if(hash === '#account') {
-        root.innerHTML = account;
-        invokeAccount();
-    } else if(hash === '#admin') {
-        root.innerHTML = admin;
-        invokeAdmin();
+    switch (hash) {
+        case '#':
+            root.innerHTML = home;
+            invokeHome();
+            break;
+        case '#login':
+            root.innerHTML = login;
+            invokeLogin();
+            break;
+        case '#signup':
+            root.innerHTML = signup;
+            invokeSignup();
+            break;
+        case '#account':
+            root.innerHTML = account;
+            invokeAccount();
+            break;
+        case '#admin':
+            root.innerHTML = admin;
+            invokeAdmin();
+            break;
+        default:
+            root.innerHTML = home;
+            invokeHome();
     }
     return true
-  }
-  
+}
 
-let publicHash = ['#login','#signup']
-let privateHash = ['#about','#admin','#account']
+
+let publicHash = ['#login', '#signup']
+let privateHash = ['#about', '#admin', '#account']
 
 // Detecting the hash changes and routing appropriately
-window.addEventListener("hashchange",()=>{
-    if(isUserLogged){
+window.addEventListener("hashchange", () => {
+    if (isUserLogged) {
         //console.log("in if")
-        if(publicHash.includes(window.location.hash)){
+        if (publicHash.includes(window.location.hash)) {
             window.location.hash = "#"
             render()
         }
-        NavUI(user).then(()=>{
-            render()
-        })}
-    else{
+        render()
+        NavUI(user)
+    }
+    else {
         //console.log("in else")
-        if(privateHash.includes(window.location.hash)){
+        if (privateHash.includes(window.location.hash)) {
             window.location.hash = "#"
             render()
         }
-        NavUI(false).then(()=>{
-            render()
-        })}
-  })
-  
+        render()
+        NavUI(false)
+    }
+})
+
 // On DOM Load
-  window.addEventListener("DOMContentLoaded", function(ev) {
+window.addEventListener("DOMContentLoaded", function (ev) {
     //console.log("DOMContentLoaded event");
+    var modals = document.querySelectorAll('.modal');
+    M.Modal.init(modals);
     var elems = document.querySelectorAll('.sidenav');
     M.Sidenav.init(elems);
-    if(isUserLogged){
-    NavUI(user).then(()=>{
-      render()
-    })}
-    else{
-    NavUI(false).then(()=>{
+    if (isUserLogged) {
         render()
-      })
-    } 
-    })
-
-// On Reload
-  window.onbeforeunload = ()=>{
-    //   NavUI(user)
-    document.getElementById("overlay").style.display = "block";
-  }
-
+        NavUI(user)
+    }
+    else {
+        render()
+        NavUI(false)
+    }
+})

@@ -1,143 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta name="Description" content="Utilizing the functionalities of Firebase">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <!--Materialize UI -->
-		<link rel="stylesheet" href="index.css">	
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-	<title>Authentication</title>
-	  <!--External and internal scripts-->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" defer></script>
-		<script src="./scripts/auth.js" defer></script>
-		<script src="./scripts/templates.js" defer></script>
-		<script src="./scripts/index.js" defer></script>
-</head>
+  <head>
+    <meta
+      name="Description"
+      content="Utilizing the functionalities of Firebase"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!--Materialize UI -->
+    <link rel="stylesheet" href="index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <title>Authentication</title>
+    <!--External and internal scripts-->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
+      defer
+    ></script>
+    <script src="./scripts/auth.js" defer></script>
+    <script src="./scripts/templates.js" defer></script>
+    <script src="./scripts/index.js" defer></script>
+  </head>
 
+  <body class="grey lighten-2">
+    <!-- Header navigation bar -->
+    <nav class=" navStyle z-depth-0 #263238 blue-grey darken-4">
+      <div class="nav-wrapper container">
+        <a href="#" class="brand-logo hide-on-med-and-down">
+          <img class="logo" src="./assets/logo.png" alt="Logo" />
+        </a>
+        <a href="#" data-target="mobile-nav" class="sidenav-trigger"
+          ><img src="./assets/menu2.png" class="menuIcon"
+        /></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li class="logged-in">
+            <a href="#" class="white-text " id="home">Home</a>
+          </li>
+          <li class="logged-in">
+            <a href="#account" class="white-text ">Account</a>
+          </li>
+          <li class="admin">
+            <a href="#admin" class="white-text ">Add Admin</a>
+          </li>
+          <li class="logged-in">
+            <a class="white-text" id="logout">Logout</a>
+          </li>
+          <li class="logged-out">
+            <a href="#login" class="white-text ">Login</a>
+          </li>
+          <li class="logged-out" ]>
+            <a href="#signup" class="white-text ">Sign up</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-<body class="grey lighten-2">
-	<!-- Header navigation bar -->
-		<nav class=" navStyle z-depth-0 #263238 blue-grey darken-4">
-			<div class="nav-wrapper container">
-			<a href="#" class="brand-logo hide-on-med-and-down">
-				<img class="logo" src="./assets/logo.png" alt="Logo">
-			</a>
-			<a href="#" data-target="mobile-nav" class="sidenav-trigger"><b>Menu</b></a>
-			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li class="logged-in" >
-					<a href ="#" class="white-text " id="home">Home</a>
-				</li>				
-				<li class="logged-in">
-					<a href="#account" class="white-text " >Account</a>
-				</li>
-				<li class="admin">
-					<a  href="#admin" class="white-text ">Add Admin</a>	
-				</li>
-				<li class="logged-in">
-					<a class="white-text" id="logout">Logout</a>
-				</li>
-				<li class="logged-out">
-					<a href="#login" class="white-text ">Login</a>
-				</li>
-				<li class="logged-out"]>
-					<a href="#signup" class="white-text ">Sign up</a>
-				</li>
+    <ul class="sidenav" id="mobile-nav">
+      <li class="logged-in">
+        <a href="#" class="black-text sidenav-close " id="home">Home</a>
+      </li>
+      <li class="logged-in">
+        <a href="#account" class="black-text sidenav-close">Account</a>
+      </li>
+      <li class="admin">
+        <a href="#admin" class="black-text sidenav-close">Add Admin</a>
+      </li>
+      <li class="logged-in">
+        <a class="black-text" id="logout sidenav-close">Logout</a>
+      </li>
+      <li class="logged-out">
+        <a href="#login" class="black-text sidenav-close ">Login</a>
+      </li>
+      <li class="logged-out" ]>
+        <a href="#signup" class="black-text sidenav-close">Sign up</a>
+      </li>
+    </ul>
 
-			</ul>
-			</div>
-		</nav>
-	
-		<ul class="sidenav" id="mobile-nav">
-				<li class="logged-in" >
-					<a href ="#" class="black-text " id="home">Home</a>
-				</li>				
-				<li class="logged-in">
-					<a href="#account" class="black-text " >Account</a>
-				</li>
-				<li class="admin">
-					<a  href="#admin" class="black-text ">Add Admin</a>	
-				</li>
-				<li class="logged-in">
-					<a class="black-text" id="logout">Logout</a>
-				</li>
-				<li class="logged-out">
-					<a href="#login" class="black-text ">Login</a>
-				</li>
-				<li class="logged-out"]>
-					<a href="#signup" class="black-text ">Sign up</a>
-				</li>
-		</ul>
+    <div id="root"></div>
 
+    <!--Modal to show forgot password-->
+    <div id="modal-forgot" class="modal grey lighten-2">
+      <div class="modal-content center-align">
+        <br /><br />
+        <h4>Forgot Password</h4>
+        <br />
+        <form id="forgot-form">
+          <div class="input-field">
+            <input
+              type="email"
+              id="forgotPass-email"
+              autocomplete="off"
+              required
+            />
+            <label for="forgotPass-email">Enter Email address</label>
+          </div>
+          <button class="btn  blue-grey darken-4 z-depth-0">Submit</button>
+        </form>
+      </div>
+    </div>
 
-	<div id="root"></div>
+    <!--Modal to show edit bio-->
+    <div id="modal-edit-bio" class="modal grey lighten-2">
+      <div class="modal-content center-align">
+        <br /><br />
+        <h4>Write about yourself..</h4>
+        <br />
+        <form id="edit-bio-form">
+          <div class="input-field">
+            <input value=" " type="text" id="edit-bio" autocomplete="off" />
+            <label for="edit-bio">Bio</label>
+          </div>
+          <button class="btn #263238 blue-grey darken-4 z-depth-0">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
 
-	<!--Modal to show forgot password-->
-		<div id="modal-forgot" class="modal grey lighten-2" >
-			<div class = "modal-content center-align">
-				<br /><br />
-				<h4>Forgot Password</h4><br />
-				<form id="forgot-form">
-					<div class="input-field">
-						<input type="email" id="forgotPass-email" autocomplete="off" required />
-						<label for="forgotPass-email">Enter Email address</label>
-					</div>
-				<button class="btn  blue-grey darken-4 z-depth-0">Submit</button>
-				</form>
-			</div>
-		</div>
+    <!--Modal to show edit image-->
+    <div id="modal-edit-img" class="modal grey lighten-2">
+      <div class="modal-content center-align">
+        <br /><br />
+        <h4>Update Image</h4>
+        <br />
+        <form id="edit-image-form">
+          <div class="image-preview-edit">
+            <div class="image-edit"></div>
+          </div>
+          <div class="file-field input-field">
+            <div class="btn">
+              <span>upload Image</span>
+              <input
+                type="file"
+                onchange="loadFile(event,'EDIT')"
+                accept="image/x-png,image/gif,image/jpeg"
+                id="edit-file"
+              />
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" />
+            </div>
+          </div>
+          <button class="btn #263238 blue-grey darken-4 z-depth-0">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
 
-	<!--Modal to show edit bio-->
-		<div id="modal-edit-bio" class="modal grey lighten-2" >
-			<div class = "modal-content center-align">
-				<br /><br />
-				<h4>Write about yourself..</h4><br />
-				<form id="edit-bio-form">
-					<div class="input-field">
-						<input type="text" id="edit-bio" autocomplete="off" required />
-						<label for="edit-bio">Bio</label>
-					</div>
-				<button class="btn #263238 blue-grey darken-4 z-depth-0">Submit</button>
-				</form>
-			</div>
-		</div>
+    <!-- Overlay to show loading icon -->
+    <div id="overlay">
+      <div id="loader">
+        <img class="loaderImg" src="./assets//loader2.gif" alt="loader" />
+      </div>
+    </div>
 
-	<!--Modal to show edit image-->
-		<div id="modal-edit-img" class="modal grey lighten-2" >
-			<div class = "modal-content center-align">
-				<br /><br />
-				<h4>Update Image</h4><br />
-				<form id="edit-image-form">
-					<div class="image-preview-edit">
-						<img src="./assets/user2.png" alt="user-image">
-					</div>
-					<div class="file-field input-field">
-						<div class="btn">
-							<span>upload Image</span>
-							<input type="file" onchange="loadFile(event,2)" accept="image/x-png,image/gif,image/jpeg" id="edit-file">
-						</div>
-						<div class="file-path-wrapper">
-							<input class="file-path validate" type="text">
-						</div>
-					</div>
-					<button class="btn #263238 blue-grey darken-4 z-depth-0">Submit</button>
-			</form>
-			</div>
-		</div>
-		
-
-<!-- Overlay to show loading icon -->
-		<div id="overlay">
-			<div id="loader"><img class="loaderImg" src="./assets//loader2.gif" alt="loader" ></div>
-		</div>
-	
-	<!--Firebase SDK-->
-		<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-functions.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-storage.js"></script>
-		<script src="./scripts/config.js"></script>
-</body>
+    <!--Firebase SDK-->
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-functions.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-storage.js"></script>
+    <script src="./scripts/config.js"></script>
+  </body>
 </html>
